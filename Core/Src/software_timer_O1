@@ -1,0 +1,91 @@
+/*
+ * software_timer.c
+ *
+ *  Created on: Sep 23, 2023
+ *      Author: Admin
+ */
+
+
+//#include "software_timer.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+
+const int TICK = 10;
+
+struct Timer{
+	struct Timer* next;
+
+	int ID;
+	int timer_counter;
+	int timer_flag;
+};
+
+struct Timer*head = NULL;
+
+void deleteTimer(struct Timer*delNode){
+	if(head == NULL) return;
+	struct Timer*phead = head;
+	if(phead == delNode){
+		free(delNode);
+		head = NULL;
+		return;
+	}
+	while(phead->next!=NULL){
+		if(phead->next == delNode){
+			phead->next = phead->next->next;
+			free(delNode);
+			return;
+		}
+		phead = phead->next;
+	}
+}
+
+void setTimer(int duration, int ID){
+	if(head == NULL){
+		head =(struct Timer*) malloc(sizeof(struct Timer));
+		head->ID = ID;
+		head->timer_counter = duration;
+		head->timer_flag = 0;
+		head->next = NULL;
+		return;
+	}
+	else{
+		struct Timer* phead = head;
+		while(phead!=NULL){
+			if(phead->ID == ID) deleteTimer(phead);
+			phead = phead->next;
+		}
+	}
+	//TODO sorting
+	struct Timer* phead = head;
+	if(head->next == NULL){
+		struct Timer* newNode = (struct Timer*) malloc(sizeof(struct Timer));
+		newNode->timer_counter = duration;
+		newNode->ID = ID;
+		newNode->next = NULL;
+		if(head->timer_counter <= duration) {
+			head->next = newNode;
+			newNode->timer_counter-=head->timer_counter;
+			return;
+		}
+		else {
+			head->timer_counter-=newNode->timer_counter;
+			newNode->next = head;
+			return;
+		}
+	}
+	while(phead!=NULL){
+
+		phead = phead->next;
+	}
+}
+
+void timerRun(){
+//	if(timer_counter > 0){
+//		timer_counter--;
+//		if(timer_counter <= 0){
+//			timer_flag = 1;
+//		}
+//	}
+}
