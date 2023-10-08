@@ -93,12 +93,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(1000, 0);
+  initTimer(1000);
+
   while (1)
   {
 	  if(timer_flag[0]){
-		  setTimer(1000,0);
-		  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		  setTimer(500,0);
+		  led7Run();
 	  }
     /* USER CODE END WHILE */
 

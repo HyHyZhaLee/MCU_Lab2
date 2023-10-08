@@ -14,5 +14,5 @@
 extern int timer_flag[NO_OF_TIMER];
 void setTimer(int duration, int ID);
 void timerRun();
-
+void initTimer(int delay);
 #endif /* INC_SOFTWARE_TIMER_H_ */
