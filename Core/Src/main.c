@@ -94,13 +94,25 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   initTimer(1000);
+  void shiftLeftMatrix() {
+      for (int i = 0; i < MAX_LED_MATRIX; i++) {
+		if (matrix_buffer[i] & 1) {
+			matrix_buffer[i] >>=1;
+			matrix_buffer[i] |= 0x80;
+		}
+		else matrix_buffer[i] >>=1;
+      }
+  }
   while (1)
   {
 	  if(timer_flag[0]){
 		  setTimer(50,0);
 		  ledMatrixRun();
 	  }
-
+	  if(timer_flag[1]){
+		  setTimer(1000,1);
+		  shiftLeftMatrix();
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
