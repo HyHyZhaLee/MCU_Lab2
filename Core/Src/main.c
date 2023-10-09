@@ -94,11 +94,40 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   initTimer(1000);
+  int hour = 15 , minute = 8 , second = 50;
+	void updateClockBuffer(){
+	  led_buffer[0] = hour/10;
+	  led_buffer[1] = hour%10;
+	  led_buffer[2] = minute/10;
+	  led_buffer[3] = minute%10;
+	}
   while (1)
   {
 	  if(timer_flag[0]){
 		  setTimer(50,0);
 		  ledMatrixRun();
+	  }
+	  if(timer_flag[1]){
+		  setTimer(250,1);
+		  led7Run();
+	  }
+	  if(timer_flag[2]){
+		  setTimer(1000,2);
+		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+		  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		  second++;
+		  if(second>=60){
+			  second = 0;
+			  minute++;
+		  }
+		  if ( minute >= 60) {
+			  minute = 0;
+			  hour ++;
+		  }
+		  if ( hour >=24) {
+			  hour = 0;
+		  }
+		  updateClockBuffer();
 	  }
 
     /* USER CODE END WHILE */
